@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+  db:
+    build: ./docker/db
+    ports:
+      - "5431:5432"
+    environment:
+      POSTGRES_USER: temba
+      POSTGRES_PASSWORD: temba
+      POSTGRES_DB: temba
+
+  redis:
+    image: redis:6-alpine
+    #container_name: redis
+  
+  app:
+    build: .
+    ports:
+      - "8005:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+      - redis
