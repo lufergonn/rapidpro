@@ -928,7 +928,7 @@ _default_database_config = {
     "NAME": "temba",
     "USER": "temba",
     "PASSWORD": "temba",
-    "HOST": "localhost",
+    "HOST": "db",
     "PORT": "5432",
     "ATOMIC_REQUESTS": True,
     "CONN_MAX_AGE": 60,
@@ -952,7 +952,7 @@ OUTGOING_PROXIES = {}
 # -----------------------------------------------------------------------------------
 # Caching using Redis
 # -----------------------------------------------------------------------------------
-REDIS_HOST = "localhost"
+REDIS_HOST = "redis"
 REDIS_PORT = 6379
 REDIS_DB = 10 if TESTING else 15  # we use a redis db of 10 for testing so that we maintain caches for dev
 
