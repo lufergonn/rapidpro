@@ -26,6 +26,17 @@ RUN yarn install
 RUN poetry run ./manage.py collectstatic --noinput --verbosity=0
 RUN poetry run ./manage.py compress --extension=".haml" --settings=temba.settings_compress
 
+# Ro-indexer
+RUN wget https://github.com/nyaruka/rp-indexer/releases/download/v7.3.7/rp-indexer_7.3.7_linux_amd64.tar.gz
+RUN tar -xvf rp-indexer_7.3.7_linux_amd64.tar.gz rp-indexer
+RUN  rm -rf rp-indexer_7.3.7_linux_amd64.tar.gz
+
+# To Mailroom
+RUN wget -P /tmp/ https://github.com/nyaruka/mailroom/releases/download/v7.5.36/mailroom_7.5.36_linux_amd64.tar.gz
+RUN tar -xvf mailroom_7.5.36_linux_amd64.tar.gz -C /tmp/
+RUN /tmp/mailroom -db=postgres://temba:temba@db:5432/temba?sslmode=disable -redis=redis://redis:6379/10 -log-level=info > mailroom.log &
+
+
 
 EXPOSE 8000
 

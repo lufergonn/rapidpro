@@ -14,6 +14,9 @@ services:
     image: redis:6-alpine
     #container_name: redis
   
+  elastic:
+    image: elasticsearch:7.17.2
+  
   app:
     build: .
     ports:
@@ -23,3 +26,4 @@ services:
     depends_on:
       - db
       - redis
+      - elastic
