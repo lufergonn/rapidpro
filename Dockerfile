@@ -33,7 +33,7 @@ RUN  rm -rf rp-indexer_7.3.7_linux_amd64.tar.gz
 
 # To Mailroom
 RUN wget -P /tmp/ https://github.com/nyaruka/mailroom/releases/download/v7.5.36/mailroom_7.5.36_linux_amd64.tar.gz
-RUN tar -xvf mailroom_7.5.36_linux_amd64.tar.gz -C /tmp/
+RUN tar -xvf /tmp/mailroom_7.5.36_linux_amd64.tar.gz -C /tmp/
 RUN /tmp/mailroom -db=postgres://temba:temba@db:5432/temba?sslmode=disable -redis=redis://redis:6379/10 -log-level=info > mailroom.log &
 
 
