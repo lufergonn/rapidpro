@@ -126,3 +126,6 @@ ansible/site.retry
 
 # autoenv
 .direnv/
+
+# mailroom
+mailroom
