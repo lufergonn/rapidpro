@@ -1,0 +1,40 @@
+POSTGRES
+
+#Create container
+docker run -d -it --name rpdb -p 5432:5432  -e POSTGRES_USER=temba -e POSTGRES_PASSWORD=temba -e POSTGRES_DB=temba postgres:13
+
+#Access to container
+docker exec -it rpdb /bin/bash
+
+#exec
+apt update -y && apt upgrade -y && \
+    apt -y install gnupg2 wget
+
+#exec
+wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - && \
+    echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee  /etc/apt/sources.list.d/pgdg.list
+
+
+apt -y install postgis postgresql-13-postgis-3
+
+#exec
+psql -h 127.0.0.1 -U temba -d temba
+
+#Create extencions
+
+---------------------------------------------------------
+REDIS
+
+#Create container
+docker run -d -it --name rpredis -p 6379:6379  redis:6
+
+
+---------------------------------------------------------
+ELASTICSEARCH
+
+docker network create esearch
+
+#Create container
+docker run -d -it --name rpesch --net esearch -p 9200:9200 -p 9300:9300 -e "discovery.type=single-node" elasticsearch:7.17.2
+
+docker exec -it rpesch /usr/share/elasticsearch/bin/elasticsearch-reset-password
